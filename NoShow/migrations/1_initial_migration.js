@@ -1,5 +1,10 @@
-var Migrations = artifacts.require("./Migrations.sol");
+// const NoShow = artifacts.require('./NoShow.sol')
+//
+// module.exports = (deployer) => {
+//     deployer.deploy(NoShow)
+// };
 
-module.exports = function(deployer) {
-  deployer.deploy(Migrations);
+const Migrations = artifacts.require("./Migrations.sol");
+module.exports = (deployer) => {
+    deployer.deploy(Migrations);
 };
