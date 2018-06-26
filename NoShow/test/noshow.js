@@ -11,7 +11,6 @@ contract("NoShow", async (accounts) => {
     const ownerAccount = accounts[0];
     const clientAccount = accounts[1];
     const anotherClientAccount = accounts[2];
-    // console.log(clientAccount);
 
     beforeEach(async () => {
         noshow = await NoShow.new({from: ownerAccount});
@@ -24,37 +23,32 @@ contract("NoShow", async (accounts) => {
     it("client made reservation", async () => {
         let reservationFee = 10;
         let tx = await noshow.reservation({from: clientAccount, value: reservationFee});
-        truffleAssert.eventEmitted(tx, 'MadeReservation', async (ev) => {
-            return ev.reserver === clientAccount && ev.amount === reservationFee;
+        truffleAssert.eventEmitted(tx, 'MadeReservation', (ev) => {
+            // Every uint256 returned from Solidity to JavaScript is an object of type BigNumber and can be converted to a number or string.
+            // uint and int are aliases for uint256 and int256, respectively.
+            return ev.reserver === clientAccount && ev.amount.toNumber() === reservationFee;
         });
-        // truffleAssert.eventEmitted(tx, 'MadeReservation');
 
         assert.equal(web3.eth.getBalance(noshow.address).toNumber(), reservationFee);
     });
 
+    it("owner can't made reservation", async () => {
+        let reservationFee = 10;
+        try {
+            await noshow.reservation({from: ownerAccount, value: reservationFee});
+            assert.fail();
+        } catch (err) {
+            assert.ok(/revert/.test(err.message));
+        }
+    });
+
+    it("if client kept reservation, owner would refund reservation fee", async () => {
+        let reservationFee = 10;
+        let reservationTx = await noshow.reservation({from: clientAccount, value: reservationFee});
+        let keepReservationTx = await noshow.clientCome({from: ownerAccount, value: reservationFee});
+        truffleAssert.eventEmitted(keepReservationTx, 'KeepPromise', (ev) => {
+            return ev.reserver === clientAccount && ev.amount.toNumber() === reservationFee;
+        });
+    })
+
 });
-
-
-
-
-
-// contract("NoShow", accounts => {
-//     const [firstAccount] = accounts;
-//
-//     it("sets an contract owner", async () => {
-//         const noshow = await NoShow.new();
-//         assert.equal(await noshow.owner.call(), firstAccount);
-//     });
-// });
-//
-// const FINNEY = 10**15;
-//
-// contract("NoShow", accounts => {
-//     const [firstAccount, secondAccount] = accounts;
-//
-//     it("accepts donations", async () => {
-//         const noshow = await NoShow.new();
-//         await noshow.reservation({ from: secondAccount, value: 10 * FINNEY });
-//         assert.equal(await noshow.raised.call(), 30 * FINNEY);
-//     });
-// });

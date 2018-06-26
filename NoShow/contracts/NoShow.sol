@@ -34,7 +34,7 @@ contract NoShow {
         //require(msg.sender != owner);
         client = msg.sender;
         reservationFee = msg.value;
-        emit MadeReservation(client, reservationFee);
+        emit MadeReservation(msg.sender, msg.value);
         pendingReturns[client] = reservationFee;
     }
     // 예약이 지켜지지 않았을 경우 실행하는 함수
@@ -48,12 +48,12 @@ contract NoShow {
         owner.transfer(amount/2);
     }
     // 예약이 지켜졌을 경우 실행하는 함수
-    function clientCome() public onlyOwner {
+    function clientCome() public payable onlyOwner {
         uint amount = pendingReturns[client];
         if (amount > 0) {
             pendingReturns[client] = 0;
         }
-        emit KeepPromise(msg.sender, amount);
+        emit KeepPromise(client, amount);
         client.transfer(amount);
     }
 }
