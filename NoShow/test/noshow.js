@@ -30,6 +30,8 @@ contract("NoShow", async (accounts) => {
         });
 
         assert.equal(web3.eth.getBalance(noshow.address).toNumber(), reservationFee);
+        let balance = await noshow.pendingReturns.call(clientAccount);
+        assert.equal(balance.toNumber(), reservationFee)
     });
 
     it("owner can't made reservation", async () => {
@@ -49,6 +51,9 @@ contract("NoShow", async (accounts) => {
         truffleAssert.eventEmitted(keepReservationTx, 'KeepPromise', (ev) => {
             return ev.reserver === clientAccount && ev.amount.toNumber() === reservationFee;
         });
+        let balance = await noshow.pendingReturns.call(clientAccount);
+        assert.equal(balance.toNumber(), 0)
+
     })
 
 });
