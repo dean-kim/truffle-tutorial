@@ -34,16 +34,16 @@ contract NoShow {
         //require(msg.sender != owner);
         client = msg.sender;
         reservationFee = msg.value;
-        emit MadeReservation(msg.sender, msg.value);
+        emit MadeReservation(client, msg.value);
         pendingReturns[client] = reservationFee;
     }
     // 예약이 지켜지지 않았을 경우 실행하는 함수
-    function withdraw() public onlyOwner {
+    function withdraw() public payable onlyOwner {
         uint amount = pendingReturns[client];
         if (amount > 0) {
             pendingReturns[client] = 0;
         }
-        emit BreakReservation(msg.sender, amount/2);
+        emit BreakReservation(client, amount/2);
         client.transfer(amount/2);
         owner.transfer(amount/2);
     }

@@ -54,6 +54,38 @@ contract("NoShow", async (accounts) => {
         let balance = await noshow.pendingReturns.call(clientAccount);
         assert.equal(balance.toNumber(), 0)
 
-    })
+    });
+
+    it("client can't made confirm reservation", async () => {
+        let reservationFee = 10;
+        try {
+            await noshow.clientCome({from: clientAccount, value: reservationFee});
+            assert.fail();
+        } catch (err) {
+            assert.ok(/revert/.test(err.message));
+        }
+    });
+
+    it("if client don't kept reservation, client would pay a fine", async () => {
+        let reservationFee = 10;
+        let reservationTx = await noshow.reservation({from: clientAccount, value: reservationFee});
+        let breakReservationTx = await noshow.withdraw({from: ownerAccount, value: reservationFee});
+        truffleAssert.eventEmitted(breakReservationTx, 'BreakReservation', (ev) => {
+            return ev.reserver === clientAccount && ev.amount.toNumber() === reservationFee * 0.5;
+        });
+        let balance = await noshow.pendingReturns.call(clientAccount);
+        assert.equal(balance.toNumber(), 0)
+
+    });
+
+    it("client can't made confirm noShow", async () => {
+        let reservationFee = 10;
+        try {
+            await noshow.withdraw({from: clientAccount, value: reservationFee});
+            assert.fail();
+        } catch (err) {
+            assert.ok(/revert/.test(err.message));
+        }
+    });
 
 });
