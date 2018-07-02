@@ -11,7 +11,7 @@ contract TestNoshow {
 
     // 계약의 배포자 확인.
     function testSettingAnOwnerDuringCreation() public {
-        NoShow noshow = new NoShow(msg.sender, 1);
+        NoShow noshow = new NoShow();
         Assert.equal(noshow.owner(), this, "An owner is different than a deployer");
     }
     // 계약 배포자 확인.
@@ -29,7 +29,7 @@ contract TestNoshow {
     function testCanWithdrawByOwner() public {
 //        NoShow noshow = NoShow(DeployedAddresses.NoShow());
 //        noshow.reservation.value(100)();
-        NoShow noshow = new NoShow(msg.sender, 1);
+        NoShow noshow = new NoShow();
         noshow.reservation.value(100)();
         noshow.withdraw();
         Assert.equal(noshow.owner(), this, "withdraw only owner can call");
