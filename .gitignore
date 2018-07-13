@@ -1,5 +1,8 @@
 # WebStorm
 .idea/*
-react/node_modules/*
-node_modules/*
 .DS_Store
+
+/build
+/noshow-web-app/src/contracts
+/node_modules
+/box-logo-assets
