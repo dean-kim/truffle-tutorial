@@ -21,11 +21,7 @@ class App extends Component {
                                 method="reservation"
                                 methodArgs={[{ from: accounts[0] }]}
                             />{" "}
-                            <ContractData
-                                contract="NoShow"
-                                method="symbol"
-                                hideIndicator
-                            />
+
                         </p>
                         <p>
                             <strong>My Balance</strong>:{" "}
@@ -56,7 +52,7 @@ const mapStateToProps = state => {
     return {
         accounts: state.accounts,
         drizzleStatus: state.drizzleStatus,
-        TutorialToken: state.contracts.TutorialToken
+        NoShow: state.contracts.NoShow
     };
 };
 
