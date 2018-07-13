@@ -27,7 +27,7 @@ contract TestNoshow {
     }
     // 예약을 지키지 않았을 때 주인이 호출하는 기능.
     function testCanWithdrawByOwner() public {
-//        NoShow noshow = NoShow(DeployedAddresses.NoShow());
+//        contracts noshow = contracts(DeployedAddresses.contracts());
 //        noshow.reservation.value(100)();
         NoShow noshow = new NoShow();
         noshow.reservation.value(100)();

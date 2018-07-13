@@ -1,7 +1,7 @@
-// const NoShow = artifacts.require('./NoShow.sol')
+// const contracts = artifacts.require('./contracts.sol')
 //
 // module.exports = (deployer) => {
-//     deployer.deploy(NoShow)
+//     deployer.deploy(contracts)
 // };
 
 const Migrations = artifacts.require("./Migrations.sol");
