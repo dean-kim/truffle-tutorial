@@ -16,24 +16,6 @@ class App extends Component {
                 <div className="App">
                     <header className="App-header">
                         <h1 className="App-title">NoSow Practice</h1>
-                        <p>
-                            <strong>Reservation</strong>:{" "}
-                            <ContractData
-                                contract="NoShow"
-                                method="pendingReturns"
-                                methodArgs={[{ from: accounts[0] }]}
-                            />{" "}
-
-                        </p>
-                        <p>
-                            <strong>Withdraw</strong>:{" "}
-                            <ContractData
-                                contract="NoShow"
-                                method="withdraw"
-                                methodArgs={[{ from: accounts[0] }]}
-                            />
-                        </p>
-                        <h3>ClientCome</h3>
                     </header>
                     <div className="App-intro">
                         <ContractForm
