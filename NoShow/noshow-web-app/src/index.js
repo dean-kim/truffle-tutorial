@@ -19,7 +19,7 @@ const options = {
         }
     },
     contracts: [NoShow],
-    events: {}
+    events: {MadeReservation, BreakReservation, KeepPromise}
 };
 
 ReactDOM.render(

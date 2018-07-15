@@ -13,13 +13,13 @@ class App extends Component {
             return (
                 <div className="App">
                     <header className="App-header">
-                        <h1 className="App-title">Tutorial Token</h1>
+                        <h1 className="App-title">NoSow Practice</h1>
                         <p>
                             <strong>Reservation</strong>:{" "}
                             <ContractData
                                 contract="NoShow"
-                                method="reservation"
-                                methodArgs={[{ from: accounts[0] }]}
+                                method="MadeReservation"
+                                methodArgs={[reserver]}
                             />{" "}
 
                         </p>
