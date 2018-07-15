@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
 import { drizzleConnect } from "drizzle-react";
@@ -18,8 +17,8 @@ class App extends Component {
                             <strong>Reservation</strong>:{" "}
                             <ContractData
                                 contract="NoShow"
-                                method="MadeReservation"
-                                methodArgs={[reserver]}
+                                method="pendingReturns"
+                                methodArgs={[]}
                             />{" "}
 
                         </p>
