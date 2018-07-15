@@ -15,7 +15,7 @@ class App extends Component {
                     <header className="App-header">
                         <h1 className="App-title">Tutorial Token</h1>
                         <p>
-                            <strong>Total Supply</strong>:{" "}
+                            <strong>Reservation</strong>:{" "}
                             <ContractData
                                 contract="NoShow"
                                 method="reservation"
@@ -24,19 +24,33 @@ class App extends Component {
 
                         </p>
                         <p>
-                            <strong>My Balance</strong>:{" "}
+                            <strong>Withdraw</strong>:{" "}
                             <ContractData
                                 contract="NoShow"
-                                method="balanceOf"
+                                method="withdraw"
                                 methodArgs={[accounts[0]]}
                             />
                         </p>
-                        <h3>Send Tokens</h3>
+                        <h3>ClientCome</h3>
                     </header>
                     <div className="App-intro">
                         <ContractForm
                             contract="NoShow"
-                            method="transfer"
+                            method="reservation"
+                            labels={["To Address", "Amount to Send"]}
+                        />
+                    </div>
+                    <div className="App-intro">
+                        <ContractForm
+                            contract="NoShow"
+                            method="clientCome"
+                            labels={["To Address", "Amount to Send"]}
+                        />
+                    </div>
+                    <div className="App-intro">
+                        <ContractForm
+                            contract="NoShow"
+                            method="withdraw"
                             labels={["To Address", "Amount to Send"]}
                         />
                     </div>
