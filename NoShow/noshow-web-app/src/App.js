@@ -8,6 +8,9 @@ class App extends Component {
     render() {
         const { drizzleStatus, accounts } = this.props;
 
+        console.log(drizzleStatus);
+        console.log(accounts);
+
         if (drizzleStatus.initialized) {
             return (
                 <div className="App">
@@ -18,7 +21,7 @@ class App extends Component {
                             <ContractData
                                 contract="NoShow"
                                 method="pendingReturns"
-                                methodArgs={[]}
+                                methodArgs={[{ from: accounts[0] }]}
                             />{" "}
 
                         </p>
@@ -27,7 +30,7 @@ class App extends Component {
                             <ContractData
                                 contract="NoShow"
                                 method="withdraw"
-                                methodArgs={[accounts[0]]}
+                                methodArgs={[{ from: accounts[0] }]}
                             />
                         </p>
                         <h3>ClientCome</h3>
