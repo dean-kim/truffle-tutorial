@@ -1,7 +1,7 @@
 /**
  * Created by KEUNU on 2018. 5. 17..
  */
-const NoShow = artifacts.require("./contracts.sol");
+const NoShow = artifacts.require("./NoShow.sol");
 const assert = require("chai").assert;
 const truffleAssert = require('truffle-assertions');
 

@@ -26,13 +26,11 @@ contract TestNoshow {
         Assert.equal(noshow.client(), this, "reservation only client can call");
     }
     // 예약을 지키지 않았을 때 주인이 호출하는 기능.
-    function testCanWithdrawByOwner() public {
-//        contracts noshow = contracts(DeployedAddresses.contracts());
+//    function testCanWithdrawByOwner() public {
+//        NoShow noshow = NoShow(DeployedAddresses.NoShow());
 //        noshow.reservation.value(100)();
-        NoShow noshow = new NoShow();
-        noshow.reservation.value(100)();
-        noshow.withdraw();
-        Assert.equal(noshow.owner(), this, "withdraw only owner can call");
-    }
+//        noshow.withdraw();
+//        Assert.equal(noshow.owner(), this, "withdraw only owner can call");
+//    }
 
 }
