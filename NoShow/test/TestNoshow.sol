@@ -22,7 +22,7 @@ contract TestNoshow {
     // 예약 기능, 예약을 호출한 사람은 이용자만 가능함.
     function testCanMakeAReservationByClient() public {
         NoShow noshow = NoShow(DeployedAddresses.NoShow());
-        noshow.reservation.value(100)();
+        noshow.reservation(0x887094b5CCF996cc1B8873e479A1fdc9c57EdF60, 100);
         Assert.equal(noshow.client(), this, "reservation only client can call");
     }
     // 예약을 지키지 않았을 때 주인이 호출하는 기능.
