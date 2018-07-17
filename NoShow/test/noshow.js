@@ -22,11 +22,11 @@ contract("NoShow", async (accounts) => {
 
     it("client made reservation", async () => {
         let reservationFee = 10;
-        let tx = await noshow.reservation({from: clientAccount, value: reservationFee});
+        let tx = await noshow.reservation(ownerAccount, reservationFee, {from: clientAccount, value: reservationFee});
         truffleAssert.eventEmitted(tx, 'MadeReservation', (ev) => {
             // Every uint256 returned from Solidity to JavaScript is an object of type BigNumber and can be converted to a number or string.
             // uint and int are aliases for uint256 and int256, respectively.
-            return ev.reserver === clientAccount && ev.amount.toNumber() === reservationFee;
+            return ev.owner === ownerAccount && ev.reserver === clientAccount && ev.amount.toNumber() === reservationFee;
         });
 
         assert.equal(web3.eth.getBalance(noshow.address).toNumber(), reservationFee);
@@ -37,7 +37,7 @@ contract("NoShow", async (accounts) => {
     it("owner can't made reservation", async () => {
         let reservationFee = 10;
         try {
-            await noshow.reservation({from: ownerAccount, value: reservationFee});
+            await noshow.reservation(ownerAccount, reservationFee);
             assert.fail();
         } catch (err) {
             assert.ok(/revert/.test(err.message));
@@ -46,10 +46,10 @@ contract("NoShow", async (accounts) => {
 
     it("if client kept reservation, owner would refund reservation fee", async () => {
         let reservationFee = 10;
-        let reservationTx = await noshow.reservation({from: clientAccount, value: reservationFee});
-        let keepReservationTx = await noshow.clientCome({from: ownerAccount, value: reservationFee});
+        let reservationTx = await noshow.reservation(ownerAccount, reservationFee, {from: clientAccount, value: reservationFee});
+        let keepReservationTx = await noshow.clientCome(clientAccount, reservationFee, {from: ownerAccount, value: reservationFee});
         truffleAssert.eventEmitted(keepReservationTx, 'KeepPromise', (ev) => {
-            return ev.reserver === clientAccount && ev.amount.toNumber() === reservationFee;
+            return ev.owner === ownerAccount && ev.reserver === clientAccount && ev.amount.toNumber() === reservationFee;
         });
         let balance = await noshow.pendingReturns.call(clientAccount);
         assert.equal(balance.toNumber(), 0)
@@ -59,7 +59,7 @@ contract("NoShow", async (accounts) => {
     it("client can't made confirm reservation", async () => {
         let reservationFee = 10;
         try {
-            await noshow.clientCome({from: clientAccount, value: reservationFee});
+            await noshow.clientCome(clientAccount, reservationFee, {from: clientAccount, value: reservationFee});
             assert.fail();
         } catch (err) {
             assert.ok(/revert/.test(err.message));
@@ -68,10 +68,10 @@ contract("NoShow", async (accounts) => {
 
     it("if client don't kept reservation, client would pay a fine", async () => {
         let reservationFee = 10;
-        let reservationTx = await noshow.reservation({from: clientAccount, value: reservationFee});
-        let breakReservationTx = await noshow.withdraw({from: ownerAccount, value: reservationFee});
+        let reservationTx = await noshow.reservation(ownerAccount, reservationFee, {from: clientAccount, value: reservationFee});
+        let breakReservationTx = await noshow.withdraw(clientAccount, reservationFee, {from: ownerAccount, value: reservationFee});
         truffleAssert.eventEmitted(breakReservationTx, 'BreakReservation', (ev) => {
-            return ev.reserver === clientAccount && ev.amount.toNumber() === reservationFee * 0.5;
+            return ev.owner === ownerAccount && ev.reserver === clientAccount && ev.amount.toNumber() === reservationFee * 0.5;
         });
         let balance = await noshow.pendingReturns.call(clientAccount);
         assert.equal(balance.toNumber(), 0)
@@ -81,7 +81,7 @@ contract("NoShow", async (accounts) => {
     it("client can't made confirm noShow", async () => {
         let reservationFee = 10;
         try {
-            await noshow.withdraw({from: clientAccount, value: reservationFee});
+            await noshow.withdraw(clientAccount, reservationFee, {from: clientAccount, value: reservationFee});
             assert.fail();
         } catch (err) {
             assert.ok(/revert/.test(err.message));
