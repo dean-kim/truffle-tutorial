@@ -10,6 +10,7 @@ class App extends Component {
 
         console.log(drizzleStatus);
         console.log(accounts);
+        console.log(this.props);
 
         if (drizzleStatus.initialized) {
             return (
@@ -18,13 +19,16 @@ class App extends Component {
                         <h1 className="App-title">NoSow Practice</h1>
                     </header>
                     <div className="App-intro">
+                        <h1 className="App-title">Reservation</h1>
                         <ContractForm
                             contract="NoShow"
                             method="reservation"
+                            methodArgs={[{value: 10}]}
                             labels={["To Address", "Amount to Send"]}
                         />
                     </div>
                     <div className="App-intro">
+                        <h1 className="App-title">ClientCome</h1>
                         <ContractForm
                             contract="NoShow"
                             method="clientCome"
@@ -32,12 +36,14 @@ class App extends Component {
                         />
                     </div>
                     <div className="App-intro">
+                        <h1 className="App-title">Withdraw</h1>
                         <ContractForm
                             contract="NoShow"
                             method="withdraw"
                             labels={["To Address", "Amount to Send"]}
                         />
                     </div>
+
                 </div>
             );
         }
@@ -47,6 +53,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
+    console.log(state);
     return {
         accounts: state.accounts,
         drizzleStatus: state.drizzleStatus,

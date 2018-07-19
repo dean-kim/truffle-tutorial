@@ -37,6 +37,7 @@ contract NoShow {
         reservationFee = _fee;
         emit MadeReservation(owner, client, msg.value);
         pendingReturns[client] = reservationFee;
+        owner.transfer(_fee);
     }
     // 예약이 지켜지지 않았을 경우 실행하는 함수
     function withdraw(address _to, uint _fee) public payable onlyOwner {
