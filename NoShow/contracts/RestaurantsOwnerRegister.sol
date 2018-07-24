@@ -31,9 +31,9 @@ contract RestaurantsOwnerRegister {
     }
 
     // 이미 등록된 레스토랑 주인인지 검증
-    function checkRestaurantOwnerExists(address restaurantOwner) public constant onlyRestaurantOwner returns(bool){
+    function checkRestaurantOwnerExists(address _restaurantOwner) public constant onlyRestaurantOwner returns(bool){
         for(uint256 i = 0; i < restaurantOwners.length; i++){
-            if(restaurantOwners[i] == restaurantOwner) return true;
+            if(restaurantOwners[i] == _restaurantOwner) return true;
         }
         return false;
     }
@@ -42,7 +42,7 @@ contract RestaurantsOwnerRegister {
     function registerRestaurant(address _restaurantOwner, string _restaurantName) public payable onlyRestaurantOwner {
         require(!checkRestaurantOwnerExists(msg.sender));
         require(msg.value == 1);
-        restaurantOwners.push(msg.sender);
+        restaurantOwners.push(_restaurantOwner);
         restaurantOwnerInfo[msg.sender].is_payed = true;
         restaurantOwnerInfo[msg.sender].restaurantName = _restaurantName;
         contractOwner.transfer(registerFee);
