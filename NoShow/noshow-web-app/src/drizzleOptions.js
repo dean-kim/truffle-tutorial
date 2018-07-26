@@ -1,4 +1,5 @@
 import NoShow from "./contracts/NoShow.json";
+import RestaurantsOwnerRegister from "./contracts/RestaurantsOwnerRegister.json"
 
 
 const drizzleOptions = {
@@ -10,10 +11,12 @@ const drizzleOptions = {
         }
     },
     contracts: [
-        NoShow
+        NoShow,
+        RestaurantsOwnerRegister
     ],
     events: {
-        NoShow: ["MadeReservation", "BreakReservation", "KeepPromise"]
+        NoShow: ['MadeReservation', 'BreakReservation', 'KeepPromise'],
+        RestaurantsOwnerRegister: ['MadeRegister']
     }
 };
 

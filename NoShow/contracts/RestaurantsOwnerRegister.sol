@@ -39,12 +39,14 @@ contract RestaurantsOwnerRegister {
     }
 
     // 레스토랑 등록 기능
-    function registerRestaurant(address _restaurantOwner, string _restaurantName) public payable onlyRestaurantOwner {
-        require(!checkRestaurantOwnerExists(msg.sender));
-        require(msg.value == 1);
-        restaurantOwners.push(_restaurantOwner);
+    function registerRestaurant(address _contractOwner, string _restaurantName) public payable onlyRestaurantOwner {
+        //require(!checkRestaurantOwnerExists(msg.sender));
+        require(contractOwner == _contractOwner);
+        //require(msg.value == 1);
+        //restaurantOwners.push(msg.sender);
         restaurantOwnerInfo[msg.sender].is_payed = true;
         restaurantOwnerInfo[msg.sender].restaurantName = _restaurantName;
-        contractOwner.transfer(registerFee);
+        emit MadeRegister(contractOwner, msg.sender, msg.value);
+        contractOwner.transfer(msg.value);
     }
 }
