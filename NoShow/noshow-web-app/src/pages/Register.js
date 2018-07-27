@@ -23,6 +23,7 @@ class Register extends Component {
                         <ContractForm
                             contract="RestaurantsOwnerRegister"
                             method="registerRestaurant"
+                            methodArgs={[{from: this.props.accounts[0],value: 1}]}
                             labels={["To Address", "Restaurant Name"]}
                         />
                     </div>
